@@ -1,0 +1,4 @@
+domain: eandersson.net
+internet_interface: enp4s0f1
+private_interface: enp4s0f0
+netplan_apply: True

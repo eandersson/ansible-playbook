@@ -1,0 +1,15 @@
+---
+- name: Setup Router
+  hosts: router
+  remote_user: eandersson
+  # remote_user: user
+  # become: yes
+  # become_method: sudo
+
+  roles:
+    - dnsmasq
+    - iptables-internet
+    - router-tuning
+    - netplan
+    - sshd
+    - docker

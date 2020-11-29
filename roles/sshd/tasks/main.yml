@@ -1,0 +1,8 @@
+---
+- name: Secure SSHD
+  template:
+    src: "sshd_config"
+    dest: "/etc/ssh/sshd_config"
+    mode: "0644"
+    validate: "/usr/sbin/sshd -T -f %s"
+    notify: restart sshd

@@ -1,0 +1,28 @@
+network:
+  renderer: networkd
+  version: 2
+  ethernets:
+    eno1:
+      dhcp4: true
+    eno2:
+      dhcp4: true
+      dhcp6-overrides:
+        route-metric: 1000
+    eno3:
+      dhcp4: true
+    eno4:
+      dhcp4: true
+    enp4s0f0:
+      addresses:
+        - 10.0.1.1/24
+      nameservers:
+          search: [{{domain}}]
+          addresses: [8.8.8.8, 8.8.4.4]
+    enp4s0f1:
+      dhcp4: true
+      dhcp4-overrides:
+        route-metric: 1
+      dhcp6: yes
+      accept-ra: true
+      dhcp6-overrides:
+        route-metric: 1

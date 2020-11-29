@@ -1,0 +1,104 @@
+---
+- name: Install LLDP daemon
+  apt: name=lldpd state=present
+
+- name: Install the NTP daemon to synchronize the clocks to ms.
+  apt: name=ntp
+
+- name: Make sure ntp is started, and is enabled on restart.
+  service: name=ntp state=started enabled=yes
+
+- name: Setup Ethtool
+  template:
+    src: "20-ethtool"
+    dest: "/etc/NetworkManager/dispatcher.d/20-ethtool"
+    mode: "755"
+
+- sysctl:
+    name: vm.swappiness
+    value: "0"
+    state: present
+
+- sysctl:
+    name: vm.min_free_kbytes
+    value: "1048576"
+    state: present
+
+# Syn Cookies
+
+- sysctl:
+    name: net.ipv4.tcp_syncookies
+    value: "1"
+    state: present
+
+- sysctl:
+    name: net.ipv4.tcp_syn_retries
+    value: "2"
+    state: present
+
+- sysctl:
+    name: net.ipv4.tcp_synack_retries
+    value: "2"
+    state: present
+
+- sysctl:
+    name: net.ipv4.tcp_max_syn_backlog
+    value: "4096"
+    state: present
+
+# Network Tuning
+
+- sysctl:
+    name: net.ipv4.tcp_congestion_control
+    value: "bbr"
+    state: present
+
+- sysctl:
+    name: net.core.default_qdisc
+    value: "fq"
+    state: present
+
+- sysctl:
+    name: net.ipv4.tcp_wmem
+    value: "8192 65536 16777216"
+    state: present
+
+- sysctl:
+    name: net.ipv4.tcp_rmem
+    value: "8192 65536 16777216"
+    state: present
+
+- sysctl:
+    name: net.ipv4.udp_wmem_min
+    value: "16384"
+    state: present
+
+- sysctl:
+    name: net.ipv4.udp_rmem_min
+    value: "16384"
+    state: present
+
+- sysctl:
+    name: net.core.wmem_default
+    value: "262144"
+    state: present
+
+- sysctl:
+    name: net.core.rmem_default
+    value: "262144"
+    state: present
+
+- sysctl:
+    name: net.core.wmem_max
+    value: "16777216"
+    state: present
+
+- sysctl:
+    name: net.core.rmem_max
+    value: "16777216"
+    state: present
+
+- sysctl:
+    name: net.core.netdev_max_backlog
+    value: "65536"
+    state: present

@@ -1,0 +1,20 @@
+---
+- name: Install dnsmasq
+  apt: name=dnsmasq state=present
+
+- name: Create Leases Folder
+  file:
+    path: /var/lib/dnsmasq/
+    state: directory
+
+- name: Copy dnsmasq shared records
+  template: src=shared_records dest=/etc/shared_records
+  notify: restart dnsmasq
+
+- name: Copy dnsmasq reserved configuration
+  template: src=reserved.conf dest=/etc/reserved.conf
+  notify: restart dnsmasq
+
+- name: Copy dnsmasq configuration
+  template: src=dnsmasq.conf dest=/etc/dnsmasq.conf
+  notify: restart dnsmasq

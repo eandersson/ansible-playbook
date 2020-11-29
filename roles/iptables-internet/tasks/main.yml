@@ -1,0 +1,53 @@
+---
+- name: Install Iptables Persistent
+  apt: name=iptables-persistent state=present
+
+- name: "Allow postrouting on {{internet_interface}}"
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: "{{internet_interface}}"
+    jump: MASQUERADE
+
+- name: "Allow Forward from {{internet_interface}} to {{private_interface}}"
+  iptables:
+    action: insert
+    ctstate: ESTABLISHED,RELATED
+    out_interface: "{{private_interface}}"
+    in_interface: "{{internet_interface}}"
+    chain: FORWARD
+    jump: ACCEPT
+
+- name: "Allow Forward from {{private_interface}} to {{internet_interface}}"
+  iptables:
+    action: insert
+    out_interface: "{{internet_interface}}"
+    in_interface: "{{private_interface}}"
+    chain: FORWARD
+    jump: ACCEPT
+
+- name: "IPv6 Allow Forward from {{private_interface}}"
+  iptables:
+    ip_version: ipv6
+    action: insert
+    in_interface: "{{private_interface}}"
+    chain: FORWARD
+    jump: ACCEPT
+
+- name: "IPv6 Allow Forward"
+  iptables:
+    ip_version: ipv6
+    action: insert
+    ctstate: ESTABLISHED,RELATED
+    chain: FORWARD
+    jump: ACCEPT
+
+- sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+
+- sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: "1"
+    state: present
