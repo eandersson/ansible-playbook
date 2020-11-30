@@ -1,0 +1,26 @@
+---
+- name: Stop and disable service systemd-resolved
+  service:
+    name: systemd-resolved
+    enabled : no
+    state: stopped
+
+- name: Install dnsmasq
+  apt: name=dnsmasq state=present
+
+- name: Dnsmasq Leases Folder
+  file:
+    path: /var/lib/dnsmasq/
+    state: directory
+
+- name: Dnsmasq shared DNS records
+  template: src=dnsmasq/shared_records dest=/etc/shared_records
+  notify: restart dnsmasq
+
+- name: Dnsmasq reserved ips
+  template: src=dnsmasq/reserved.conf dest=/etc/dnsmasq.d/reserved.conf
+  notify: restart dnsmasq
+
+- name: Dnsmasq base configuration
+  template: src=dnsmasq/dnsmasq.conf dest=/etc/dnsmasq.conf
+  notify: restart dnsmasq

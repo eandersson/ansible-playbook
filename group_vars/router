@@ -1,3 +1,5 @@
-internet_interface: enp4s0f1
-private_interface: enp4s0f0
+router_ip: 10.0.1.1
+default_dhcp_range: 10.0.1.11,10.0.1.248,24h
+external_interface: enp4s0f1
+internal_interface: enp4s0f0
 netplan_apply: True

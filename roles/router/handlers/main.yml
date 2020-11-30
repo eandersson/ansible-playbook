@@ -4,3 +4,6 @@
   listen: netplan apply config
   become: true
   when: netplan_apply
+
+- name: restart dnsmasq
+  service: name=dnsmasq state=restarted enabled=yes

@@ -1,13 +1,4 @@
 ---
-- name: Install LLDP daemon
-  apt: name=lldpd state=present
-
-- name: Install the NTP daemon to synchronize the clocks to ms.
-  apt: name=ntp
-
-- name: Make sure ntp is started, and is enabled on restart.
-  service: name=ntp state=started enabled=yes
-
 - name: Setup Ethtool
   template:
     src: "20-ethtool"
@@ -22,18 +13,6 @@
 - sysctl:
     name: vm.min_free_kbytes
     value: "1048576"
-    state: present
-
-# Port Forwarding
-
-- sysctl:
-    name: net.ipv4.ip_forward
-    value: "1"
-    state: present
-
-- sysctl:
-    name: net.ipv6.conf.all.forwarding
-    value: "1"
     state: present
 
 # Syn Cookies

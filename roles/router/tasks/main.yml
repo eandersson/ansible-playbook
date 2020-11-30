@@ -1,0 +1,6 @@
+---
+- include_tasks: netplan.yml
+- include_tasks: firewalld.yml
+- include_tasks: services.yml
+- include_tasks: dnsmasq.yml
+- include_tasks: tuning.yml

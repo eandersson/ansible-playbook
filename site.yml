@@ -7,9 +7,6 @@
   # become_method: sudo
 
   roles:
-    - dnsmasq
-    - firewalld
-    - router-tuning
-    - netplan
+    - router
     - sshd
     - docker

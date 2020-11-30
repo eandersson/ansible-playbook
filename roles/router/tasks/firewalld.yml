@@ -2,15 +2,28 @@
 - name: Install Firewalld
   apt: name=firewalld state=present
 
+# Port Forwarding
+- sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+
+- sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: "1"
+    state: present
+
+# Firewall Rules
+
 - firewalld:
     zone: external
-    interface: "{{internet_interface}}"
+    interface: "{{external_interface}}"
     permanent: true
     state: enabled
 
 - firewalld:
     zone: external
-    interface: "{{private_interface}}"
+    interface: "{{internal_interface}}"
     permanent: true
     state: enabled
 
