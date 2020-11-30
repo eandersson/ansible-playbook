@@ -5,8 +5,11 @@
 - name: Make sure lldpd is started, and is enabled on restart.
   service: name=lldpd state=started enabled=yes
 
-- name: Install the NTP daemon to synchronize the clocks to ms.
-  apt: name=ntp
+- name: Install the chrony daemon to synchronize the clocks to ms.
+  apt: name=chrony
 
-- name: Make sure ntp is started, and is enabled on restart.
-  service: name=ntp state=started enabled=yes
+- name: Make sure chrony is started, and is enabled on restart.
+  service: name=chrony state=started enabled=yes
+
+- name: Make sure ntp is stopped and disabled.
+  service: name=ntp state=stopped enabled=no
