@@ -1,0 +1,33 @@
+---
+- name: Install Firewalld
+  apt: name=firewalld state=present
+
+- firewalld:
+    zone: external
+    interface: "{{internet_interface}}"
+    permanent: true
+    state: enabled
+
+- firewalld:
+    zone: external
+    interface: "{{private_interface}}"
+    permanent: true
+    state: enabled
+
+- firewalld:
+    masquerade: yes
+    state: enabled
+    permanent: true
+    zone: external
+
+- firewalld:
+    zone: internal
+    service: dns
+    permanent: true
+    state: enabled
+
+- firewalld:
+    zone: internal
+    port: 9000/tcp
+    permanent: true
+    state: enabled

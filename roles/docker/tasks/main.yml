@@ -17,7 +17,7 @@
     detach: true
     recreate: false
     restart_policy: "always"
-    published_ports: "9000:9000"
+    published_ports: "10.0.1.1:9000:9000"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/opt/portainer:/data"
@@ -31,7 +31,7 @@
     detach: true
     recreate: false
     restart_policy: "always"
-    published_ports: ["2379:2379", "2380:2380"]
+    published_ports: ["10.0.1.1:2379:2379", "10.0.1.1:2380:2380"]
     env:
       ALLOW_NONE_AUTHENTICATION: "yes"
       ETCD_ADVERTISE_CLIENT_URLS: "etcd.eandersson.net:2379"
