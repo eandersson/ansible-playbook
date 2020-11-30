@@ -22,7 +22,7 @@
     state: enabled
 
 - firewalld:
-    zone: external
+    zone: internal
     interface: "{{internal_interface}}"
     permanent: true
     state: enabled
