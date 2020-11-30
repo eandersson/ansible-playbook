@@ -15,38 +15,44 @@
 
 # Firewall Rules
 
-- firewalld:
+- name: Set External (Egress) interface to External
+  ansible.posix.firewalld:
     zone: external
     interface: "{{external_interface}}"
-    permanent: true
+    permanent: yes
     state: enabled
 
-- firewalld:
+- name: Set Internal interface to Internal
+  ansible.posix.firewalld:
     zone: internal
     interface: "{{internal_interface}}"
-    permanent: true
+    permanent: yes
     state: enabled
 
-- firewalld:
+- name: Enable Masquerade
+  ansible.posix.firewalld:
     masquerade: yes
     state: enabled
-    permanent: true
+    permanent: yes
     zone: external
 
-- firewalld:
+- name: Open DHCP access internally
+  ansible.posix.firewalld:
     zone: internal
     service: dhcp
-    permanent: true
+    permanent: yes
     state: enabled
 
-- firewalld:
+- name: Open DMS access internally
+  ansible.posix.firewalld:
     zone: internal
     service: dns
-    permanent: true
+    permanent: yes
     state: enabled
 
-- firewalld:
+- name: Open Portainer access internally
+  ansible.posix.firewalld:
     zone: internal
     port: 9000/tcp
-    permanent: true
+    permanent: yes
     state: enabled
