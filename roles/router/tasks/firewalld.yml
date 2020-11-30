@@ -35,6 +35,12 @@
 
 - firewalld:
     zone: internal
+    service: dhcp
+    permanent: true
+    state: enabled
+
+- firewalld:
+    zone: internal
     service: dns
     permanent: true
     state: enabled
